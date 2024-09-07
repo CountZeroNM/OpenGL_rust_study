@@ -265,9 +265,7 @@ fn main() {
             shader.set_vector3(c_str!("uLight.specular"), &specular);
 
             gl::BindTexture(gl::TEXTURE_2D, surface_texture_id as u32);
-
             vertex.draw();
-
             gl::BindTexture(gl::TEXTURE_2D, 0);
 
             imgui_sdl2_context.prepare_frame(
@@ -278,7 +276,7 @@ fn main() {
 
             let ui = imgui_context.frame();
             imgui::Window::new(im_str!("Information"))
-                .size([300.0, 440.0], imgui::Condition::FirstUseEver)
+                .size([300.0, 300.0], imgui::Condition::FirstUseEver)
                 .position([10.0, 10.0], imgui::Condition::FirstUseEver)
                 .build(&ui, || {
                     ui.text(im_str!("OpenGL Test App ver 1.0"));
@@ -286,14 +284,13 @@ fn main() {
                     ui.text(im_str!("FPS: {:.1}", ui.io().framerate));
                     let display_size = ui.io().display_size;
                     ui.text(format!(
-                        "Display Size: ({:.1}, {:1})",
+                        "Display Size: ({:.1}, {:.1})",
                         display_size[0], display_size[1]
                     ));
-                    ui.text(im_str!("Hello, World!"));
                     let mouse_pos = ui.io().mouse_pos;
                     ui.text(format!(
                         "Mouse Position: ({:.1}, {:.1})",
-                        mouse_pos[0],mouse_pos[1]
+                        mouse_pos[0], mouse_pos[1]
                     ));
 
                     ui.separator();
@@ -305,7 +302,7 @@ fn main() {
 
                     ui.separator();
 
-                    # [rustfmt::skip]
+                    #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Camera X"), -5.0..=5.0)
                         .build(&ui, &mut camera_x);
                     #[rustfmt::skip]
@@ -314,24 +311,10 @@ fn main() {
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Camera Z"), -5.0..=5.0)
                         .build(&ui, &mut camera_z);
-
-                    imgui::ProgressBar::new(0.3)
-                        .size([200.0, 20.0])
-                        .overlay_text(im_str!("Progress!"))
-                        .build(&ui);
-
-                    let arr = [0.6f32, 0.1f32, 1.0f32, 0.5f32, 0.92f32, 0.1f32, 0.2f32];
-                    ui.plot_lines(im_str!("lines"), &arr)
-                        .graph_size([200.0, 40.0])
-                        .build();
-                    ui.plot_histogram(im_str!("histgram"), &arr)
-                        .graph_size([200.0, 40.0])
-                        .build();
-
-                    });
+                });
 
             imgui::Window::new(im_str!("Light"))
-                .size([360.0, 450.0], imgui::Condition::FirstUseEver)
+                .size([300.0, 450.0], imgui::Condition::FirstUseEver)
                 .position([600.0, 10.0], imgui::Condition::FirstUseEver)
                 .build(&ui, || {
                     imgui::Slider::new(im_str!("Alpha"), 0.0..=1.0).build(&ui, &mut alpha);
@@ -350,6 +333,15 @@ fn main() {
 
                     ui.separator();
 
+                    imgui::Slider::new(im_str!("Direction X"), -1.0..=1.0)
+                        .build(&ui, &mut light_direction.x);
+                    imgui::Slider::new(im_str!("Direction Y"), -1.0..=1.0)
+                        .build(&ui, &mut light_direction.y);
+                    imgui::Slider::new(im_str!("Direction Z"), -1.0..=1.0)
+                        .build(&ui, &mut light_direction.z);
+
+                    ui.separator();
+
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Ambient R"), 0.0..=1.0)
                         .build(&ui, &mut ambient.x);
@@ -364,13 +356,14 @@ fn main() {
 
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Diffuse R"), 0.0..=1.0)
-                       .build(&ui, &mut diffuse.x);
+                        .build(&ui, &mut diffuse.x);
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Diffuse G"), 0.0..=1.0)
                         .build(&ui, &mut diffuse.y);
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Diffuse B"), 0.0..=1.0)
                         .build(&ui, &mut diffuse.z);
+
                     ui.separator();
 
                     imgui::Slider::new(im_str!("Specular R"), 0.0..=1.0)
