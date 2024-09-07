@@ -23,7 +23,7 @@ impl Vertex {
         let mut vbo = 0;
 
         unsafe {
-            // create vertex array object and vertex buffer object
+            // create vertex array and vertex buffer
             gl::GenVertexArrays(1, &mut vao);
             gl::GenBuffers(1, &mut vbo);
 
