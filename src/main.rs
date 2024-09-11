@@ -293,7 +293,7 @@ fn main() {
                     let mouse_pos = ui.io().mouse_pos;
                     ui.text(format!(
                         "Mouse Position: ({:.1}, {:.1})",
-                        mouse_pos[0],mouse_pos[1]
+                        mouse_pos[0], mouse_pos[1]
                     ));
 
                     ui.separator();
@@ -305,7 +305,7 @@ fn main() {
 
                     ui.separator();
 
-                    # [rustfmt::skip]
+                    #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Camera X"), -5.0..=5.0)
                         .build(&ui, &mut camera_x);
                     #[rustfmt::skip]
@@ -350,6 +350,14 @@ fn main() {
 
                     ui.separator();
 
+                    imgui::Slider::new(im_str!("Direction X"), -1.0..=1.0)
+                        .build(&ui, &mut light_direction.x);
+                    imgui::Slider::new(im_str!("Direction Y"), -1.0..=1.0)
+                        .build(&ui, &mut light_direction.y);
+                    imgui::Slider::new(im_str!("Direction Z"), -1.0..=1.0)
+                        .build(&ui, &mut light_direction.z);
+
+                    ui.separator();
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Ambient R"), 0.0..=1.0)
                         .build(&ui, &mut ambient.x);
@@ -364,7 +372,7 @@ fn main() {
 
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Diffuse R"), 0.0..=1.0)
-                       .build(&ui, &mut diffuse.x);
+                        .build(&ui, &mut diffuse.x);
                     #[rustfmt::skip]
                     imgui::Slider::new(im_str!("Diffuse G"), 0.0..=1.0)
                         .build(&ui, &mut diffuse.y);
